@@ -1,0 +1,8 @@
+---
+layout: none
+---
+{% assign data = site.rings | jsonify %}
+{% assign keys_to_remove = "content,output,path,relative_path,date,collection,excerpt,categories,next,tags,previous,draft,layout,ext,id" | split: "," %}
+{% assign filtered_data = data | ring_remove_keys: keys_to_remove %}
+{% assign object_data = filtered_data | ring_array_to_object %}
+{{ object_data }}

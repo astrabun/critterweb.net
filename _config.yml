@@ -1,0 +1,17 @@
+url: "https://critterweb.net"
+baseurl: ""
+title: "The Critter Web"
+repo: "https://github.com/astrabun/critterweb.net"
+collections:
+  rings:
+    output: true
+    permalink: /:collection/:slug
+defaults:
+  - scope:
+      path: ""
+      type: rings
+    values:
+      layout: ring
+permalinks:
+  api_rings_bnuy: "/api/rings/bnuy.json"
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'CNAME']

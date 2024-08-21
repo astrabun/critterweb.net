@@ -1,0 +1,7 @@
+---
+layout: ring
+permalink: /api/rings/critters.json
+slug: critters
+---
+
+{% assign page.url = "/api/rings/critters.json" %}

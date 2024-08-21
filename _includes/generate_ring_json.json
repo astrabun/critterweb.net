@@ -1,0 +1,20 @@
+{% assign slug = include.slug %}
+{%- assign members_json = "[" -%}
+
+{%- for _site in site.data.sites -%}
+    {%- if _site.rings contains slug -%}
+        {%- if forloop.first == false -%}
+            {%- assign members_json = members_json | append: "," -%}
+        {%- endif -%}
+
+        {%- capture member_json -%}
+{"name": {{ _site.name | jsonify }},"description": {{ _site.description | jsonify }}, "link": {{ _site.link | jsonify }}}
+        {%- endcapture -%}
+
+        {%- assign members_json = members_json | append: member_json -%}
+    {%- endif -%}
+{%- endfor -%}
+
+{%- assign members_json = members_json | append: "]" -%}
+
+{"slug": {{ slug | jsonify }}, "members": {{ members_json }}}
