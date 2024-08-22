@@ -12,6 +12,4 @@ defaults:
       type: rings
     values:
       layout: ring
-permalinks:
-  api_rings_bnuy: "/api/rings/bnuy.json"
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'CNAME']
