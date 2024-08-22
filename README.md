@@ -48,14 +48,3 @@ slug: new-ring-slug
 
 {% assign page.url = "/api/rings/new-ring-slug.json" %}
 ```
-
-3. Edit `_config.yml`'s `permalinks` key to include a mapping for the API version of the data:
-
-```yml
-#...
-permalinks:
-    # ...
-    api_rings_new_ring_slug: "/api/rings/new-ring-slug.json"
-    # ...
-#...
-```
