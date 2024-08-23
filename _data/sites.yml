@@ -4,3 +4,9 @@
     A bun on the internet!
   rings:
     - critters
+- name: Cascade
+  link: "https://cascading.space/"
+  description: |
+    A protogen that likes experimenting on the web
+  rings:
+    - critters
