@@ -3,7 +3,7 @@
   description: |
     A bun on the internet!
   rings:
-    - critters
+    - critters_test
 - name: Cascade
   link: "https://cascading.space/"
   description: |
