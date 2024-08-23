@@ -61,6 +61,10 @@
                 let _myPositionInRing = _ringMembers.findIndex(item => item.name.toLowerCase() === memberName.toLowerCase());
                 let _prevInRing = _ringMembers[(_myPositionInRing - 1 + _ringMembers.length) % _ringMembers.length];
                 let _nextInRing = _ringMembers[(_myPositionInRing + 1) % _ringMembers.length];
+                if (_myPositionInRing === -1) {
+                    infoDiv.innerHTML = "Sorry, something went wrong."
+                    return;
+                }
                 let _targetLink = redirectTo === "prev" ? _prevInRing.link : _nextInRing.link;
                 window.location.href = _targetLink;
             })
