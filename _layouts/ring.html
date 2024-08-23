@@ -10,45 +10,62 @@
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
   </head>
   <body>
-    <h1>{{ page.name }}</h1>
-    <h2>Description</h2>
-    <p>{{ page.description }}</p>
-    <h3>Programmatic Representation:</h3>
-    See <a href="/api/rings/{{page.slug}}.json">API</a>
-    <h2>Members</h2>
-    <ul>
-        {% for site in site.data.sites %}
-            {% if site.rings contains page.slug %}
-                 <li>
-                    <div style="display: flex; flex-direction: column;">
-                        <span>{{ site.name }} - <a href="{{ site.link }}">{{ site.link }}</a></span>
-                        <span style="font-size: smaller">{{ site.description }}</span>
-                    </div>
-                 </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    <br />
-    <hr />
-    <br />
-    <h2>Show the webring resources on your page!</h2>
-    <p>If you are a member of the webring, use the following (or implement your own version):</p>
-    {%- capture display_md -%}{%- include display_webring.md slug=page.slug -%}{%- endcapture -%}
-    <div id="webring-code" style="margin: auto; padding: 20px; display: flex; background: lightgray; max-width: 800px;">
-        <pre style="white-space: pre-wrap;">
-            {{- display_md | escape -}}
-        </pre>
+    <div id="info">
+        <h1>{{ page.name }}</h1>
+        <h2>Description</h2>
+        <p>{{ page.description }}</p>
+        <h3>Programmatic Representation:</h3>
+        See <a href="/api/rings/{{page.slug}}.json">API</a>
+        <h2>Members</h2>
+        <ul>
+            {% for site in site.data.sites %}
+                {% if site.rings contains page.slug %}
+                    <li>
+                        <div style="display: flex; flex-direction: column;">
+                            <span>{{ site.name }} - <a href="{{ site.link }}">{{ site.link }}</a></span>
+                            <span style="font-size: smaller">{{ site.description }}</span>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <br />
+        <hr />
+        <br />
+        <h2>Show the webring resources on your page!</h2>
+        <p>If you are a member of the webring, use the following (style as you see fit!):</p>
+        {%- capture display_md -%}{%- include display_webring.md slug=page.slug -%}{%- endcapture -%}
+        <div id="webring-code" style="padding: 20px; display: flex; background: lightgray; max-width: 800px;">
+            <pre style="white-space: pre-wrap;">
+                {{- display_md | escape -}}
+            </pre>
+        </div>
+        <p>Be sure to update the "name" parameter in the prev/next links to the name of your site in the webring (URL encoded! e.g., <code>My Cool Site Name</code> would be <code>My%20Cool%20Site%20Name</code>)</p>
     </div>
-    <p>This will render like this if you are a part of the webring:</p>
-    {%- capture display_md_simulate_good -%}{%- include display_webring.md slug=page.slug sim="true" sim_type="good" -%}{%- endcapture -%}
-    <div id="webring-preview">
-        {{ display_md_simulate_good | markdownify }}
-    </div>
-    <p>And like this if you are not a part of the webring:</p>
-    {%- capture display_md_simulate -%}{%- include display_webring.md slug=page.slug sim="true" sim_type="bad" -%}{%- endcapture -%}
-    <div id="webring-preview-bad">
-        {{ display_md_simulate | markdownify }}
-    </div>
+    <script>
+        const currentHref = new URL(window.location.href);
+        const redirectTo = currentHref.searchParams.get("to");
+        const memberName = currentHref.searchParams.get("name");
+        if ((redirectTo === "next" || redirectTo === "prev") && memberName) {
+            const infoDiv = document.getElementById("info");
+            infoDiv.innerHTML = `<h1>Loading next site in ring...</h1>`
+            fetch(`{{site.url}}/api/rings/{{page.slug}}.json`).then((res) => res.json()).then(data => {
+                let _ringSlug = data.slug;
+                let _ringMembers = data.members;
+                if (_ringMembers.length === 0) {
+                    infoDiv.innerHTML = `<code>Error: This webring is empty: {{page.name}}</code><br />
+                    <p>Please see <a style="color: inherit;" href="{{site.url}}/rings/{{include.slug}}" target="_blank">{{page.name}}</a> for details.</p>`;
+                    infoDiv.style = `margin: 5px; padding: 15px; background: red; color: white; font-weight: 800; border-radius: 5px; text-shadow: 1px 1px black;`;
+                    return;
+                }
+                let _myPositionInRing = _ringMembers.findIndex(item => item.name.toLowerCase() === memberName.toLowerCase());
+                let _prevInRing = _ringMembers[(_myPositionInRing - 1 + _ringMembers.length) % _ringMembers.length];
+                let _nextInRing = _ringMembers[(_myPositionInRing + 1) % _ringMembers.length];
+                let _targetLink = redirectTo === "prev" ? _prevInRing.link : _nextInRing.link;
+                window.location.href = _targetLink;
+            })
+        }
+    </script>
   </body>
 </html>
 {% endif %}
