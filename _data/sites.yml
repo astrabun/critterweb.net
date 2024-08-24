@@ -10,3 +10,9 @@
     A protogen that likes experimenting on the web
   rings:
     - critters
+- name: SpadeHoof
+  link: "https://spadehoof.com"
+  description: |
+    A deer on the internet!
+  rings:
+    - critters
