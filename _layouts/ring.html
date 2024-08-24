@@ -66,13 +66,7 @@
                     return;
                 }
                 let _targetLink = redirectTo === "prev" ? _prevInRing.link : _nextInRing.link;
-                infodiv.innerHTML = `
-                Position: ${_myPositionInRing}<br />
-                prev: ${JSON.stringify(_prevInRing)}<br />
-                next: ${JSON.stringify(_nextInRing)}<br />
-                members: ${JSON.stringify(_ringMembers)}<br />
-                `;
-                // window.location.href = _targetLink;
+                window.location.href = _targetLink;
             })
         }
     </script>

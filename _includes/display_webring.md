@@ -49,7 +49,7 @@
     <div>
         <span><a href="{{site.url}}/rings/{{include.slug}}?name=Simulated&to=prev" target="_blank">previous</a></span>
         <span><a href="{{site.url}}/rings/{{include.slug}}" target="_blank">info</a></span>
-        <span><a href="{{site.url}}/rings/{{include.slug}}?name=Simulated&to=prev" target="_blank">next</a></span>
+        <span><a href="{{site.url}}/rings/{{include.slug}}?name=Simulated&to=next" target="_blank">next</a></span>
     </div>
 </div>
 {% endif %}
