@@ -8,6 +8,8 @@
   link: "https://toi.sh"
   description: |
     A red panda making stuff.
+  rings:
+    - critters
 - name: Cascade
   link: "https://cascading.space/"
   description: |
