@@ -4,6 +4,10 @@
     A bun on the internet!
   rings:
     - critters
+- name: Toish
+  link: "https://toi.sh"
+  description: |
+    A red panda making stuff.
 - name: Cascade
   link: "https://cascading.space/"
   description: |
